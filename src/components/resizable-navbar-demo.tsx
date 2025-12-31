@@ -6,12 +6,16 @@ import {
     NavbarLogo,
     NavbarButton,
     NavLink,
-    NavDropdown,
+    NavMegaMenu,
+    NavServicesMegaMenu,
+    NavAboutMegaMenu,
     MobileNavHeader,
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
+import { cases } from "@/components/FeaturedCases";
+import { services } from "@/components/ServicesSection";
 
 export default function NavbarDemo() {
     const aboutUsItems = [
@@ -30,12 +34,12 @@ export default function NavbarDemo() {
                     <NavbarLogo />
                     <div className="flex items-center gap-2">
                         <NavLink href="/">Home</NavLink>
-                        <NavDropdown title="About us" items={aboutUsItems} />
-                        <NavLink href="#services">Services we offer</NavLink>
-                        <NavLink href="#cases">Case Studies</NavLink>
+                        <NavAboutMegaMenu title="About us" />
+                        <NavServicesMegaMenu title="Services we offer" services={services} />
+                        <NavMegaMenu title="Case Studies" cases={cases} />
                     </div>
                     <div className="flex items-center gap-4">
-                        <NavbarButton variant="dark">Book a call</NavbarButton>
+                        <NavbarButton variant="dark" href="/contact">Book a call</NavbarButton>
                     </div>
                 </NavBody>
 

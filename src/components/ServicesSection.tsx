@@ -3,37 +3,43 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 
-interface ServiceItem {
+export interface ServiceItem {
     id: string;
     number: string;
     title: string;
     description: string;
 }
 
-const services: ServiceItem[] = [
+export const services: ServiceItem[] = [
     {
-        id: 'strategy',
+        id: 'digital-development',
         number: '01',
-        title: 'Brand Strategy & Identity',
-        description: 'We build a brand strategy and identity designed to elevate and grow your brand.',
-    },
-    {
-        id: 'development',
-        number: '02',
         title: 'Digital Development',
         description: 'Custom-built websites and webshops that combine speed, conversion, and scalability.',
     },
     {
-        id: 'marketing',
-        number: '03',
-        title: 'Digital Marketing',
-        description: 'Data-driven marketing strategies that amplify your reach and drive meaningful conversions.',
+        id: 'performance-marketing',
+        number: '02',
+        title: 'Performance Marketing',
+        description: 'Data-driven campaigns built on testing and conversion tracking for measurable growth.',
     },
     {
-        id: 'content',
+        id: 'ai-automation',
+        number: '03',
+        title: 'AI Automation Services',
+        description: 'Smart workflows and AI integrations that eliminate busywork and deliver outcomes.',
+    },
+    {
+        id: 'social-media-content',
         number: '04',
-        title: 'Content Production',
-        description: 'High-impact visual and written content that tells your brand story with clarity and power.',
+        title: 'Social Media & Content',
+        description: 'Premium content systems and strategies designed to build attention and brand trust.',
+    },
+    {
+        id: 'custom-app-solutions',
+        number: '05',
+        title: 'Custom App Solutions',
+        description: 'Scalable mobile and web applications built to solve complex business workflows.',
     }
 ];
 
@@ -65,9 +71,10 @@ const ServicesSection: React.FC = () => {
                     {/* Right Side: Services List */}
                     <div className="flex flex-col border-t border-white/10">
                         {services.map((service) => (
-                            <div
+                            <a
                                 key={service.id}
-                                className="group relative border-b border-white/10 py-10 md:py-12 cursor-pointer"
+                                href={`/services/${service.id}`}
+                                className="group relative border-b border-white/10 py-10 md:py-12 cursor-pointer block"
                                 onMouseEnter={() => setActiveItem(service.id)}
                                 onMouseLeave={() => setActiveItem(null)}
                             >
@@ -96,7 +103,7 @@ const ServicesSection: React.FC = () => {
                                         </motion.div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         ))}
                     </div>
                 </div>

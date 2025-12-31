@@ -1,88 +1,82 @@
 "use client";
 
-
+import { useEffect, useState } from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function AppleCardsCarouselDemo() {
-    const cards = data.map((card, index) => (
+    const [cards, setCards] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchClients() {
+            try {
+                const { data, error } = await supabase
+                    .from('our_clients')
+                    .select('title, category, thumbnail_url, slug, short_description')
+                    .eq('published', true)
+                    .order('order_index', { ascending: true });
+
+                if (error) throw error;
+
+                const formattedCards = (data || []).map((client) => ({
+                    category: client.category,
+                    title: client.title,
+                    src: client.thumbnail_url,
+                    slug: client.slug,
+                    href: `/clients/${client.slug}`,
+                    content: <ProjectContent client={client} />,
+                }));
+                setCards(formattedCards);
+            } catch (err) {
+                console.error("Error fetching clients for carousel:", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchClients();
+    }, []);
+
+    if (loading) return null;
+
+    const items = cards.map((card, index) => (
         <Card key={card.src} card={card} index={index} />
     ));
 
     return (
-        <div className="w-full h-full py-16 md:py-24 bg-white dark:bg-black">
-            <h2 className="max-w-7xl pl-4 mx-auto text-3xl md:text-5xl lg:text-6xl font-bold text-neutral-800 dark:text-neutral-200 font-sans tracking-tight">
-                Get to know Klarus.
-            </h2>
-            <Carousel items={cards} />
+        <div className="w-full h-full py-20 bg-black">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-8 text-left">
+                <h2 className="text-xl md:text-5xl font-bold text-white font-sans">
+                    Our Clients.
+                </h2>
+            </div>
+            <Carousel items={items} />
         </div>
     );
 }
 
-const DummyContent = () => {
+const ProjectContent = ({ client }: { client: any }) => {
     return (
-        <>
-            {[...new Array(3).fill(1)].map((_, index) => {
-                return (
-                    <div
-                        key={"dummy-content" + index}
-                        className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
-                    >
-                        <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto leading-relaxed">
-                            <span className="font-bold text-neutral-700 dark:text-neutral-200">
-                                The first rule of growth is to build something remarkable.
-                            </span>{" "}
-                            We focus on the intersections of creativity, technology, and strategy to move your brand forward with confidence.
-                        </p>
-                        <img
-                            src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=2526&auto=format&fit=crop"
-                            alt="Macbook mockup"
-                            height="500"
-                            width="500"
-                            className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain mt-8"
-                        />
-                    </div>
-                );
-            })}
-        </>
+        <div className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4 text-left">
+            <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl leading-relaxed">
+                <span className="font-bold text-neutral-700 dark:text-neutral-200">
+                    {client.title}
+                </span>{" "}
+                {client.short_description}
+            </p>
+            <div className="mt-8">
+                <a
+                    href={`/clients/${client.slug}`}
+                    className="px-8 py-4 bg-[#1E2BFF] text-white rounded-full font-bold uppercase tracking-widest text-xs hover:bg-black transition-colors inline-block"
+                >
+                    View Full Project
+                </a>
+            </div>
+            <img
+                src={client.thumbnail_url}
+                alt={client.title}
+                className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-cover rounded-2xl mt-8 shadow-lg"
+            />
+        </div>
     );
 };
-
-const data = [
-    {
-        category: "Artificial Intelligence",
-        title: "AI-Powered Brand Scaling.",
-        src: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=3556&auto=format&fit=crop",
-        content: <DummyContent />,
-    },
-    {
-        category: "Productivity",
-        title: "Optimized Performance Workflows.",
-        src: "https://images.unsplash.com/photo-1531554694128-c4c6665f59c2?q=80&w=3387&auto=format&fit=crop",
-        content: <DummyContent />,
-    },
-    {
-        category: "Creative",
-        title: "Bold Design for the Modern Era.",
-        src: "https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop",
-        content: <DummyContent />,
-    },
-
-    {
-        category: "Technology",
-        title: "Building the Foundations of Tomorrow.",
-        src: "https://images.unsplash.com/photo-1599202860130-f600f4948364?q=80&w=2515&auto=format&fit=crop",
-        content: <DummyContent />,
-    },
-    {
-        category: "Vision",
-        title: "Clarity in a Complex World.",
-        src: "https://images.unsplash.com/photo-1602081957921-9137a5d6eaee?q=80&w=2793&auto=format&fit=crop",
-        content: <DummyContent />,
-    },
-    {
-        category: "Growth",
-        title: "Join the Future of Digital Agency.",
-        src: "https://images.unsplash.com/photo-1511984804822-e16ba72f5848?q=80&w=2048&auto=format&fit=crop",
-        content: <DummyContent />,
-    },
-];

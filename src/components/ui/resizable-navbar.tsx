@@ -382,3 +382,7 @@ export const NavbarButton = ({
         </DynamicTag>
     );
 };
+
+export { NavMegaMenu } from "./NavMegaMenu";
+export { NavServicesMegaMenu } from "./NavServicesMegaMenu";
+export { NavAboutMegaMenu } from "./NavAboutMegaMenu";

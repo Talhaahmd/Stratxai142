@@ -1,82 +1,36 @@
-"use client";
-
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { IconArrowRight, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { supabase } from "@/lib/supabaseClient";
 
-interface Case {
-    id: number;
+export interface Case {
+    id: string;
     category: string;
     title: string;
-    description: string;
-    image: string;
-    tags: string[];
-    href: string;
+    short_description: string;
+    thumbnail_url: string;
+    what_we_did: string[];
+    slug: string;
+    is_featured: boolean;
+    published: boolean;
+    order_index: number;
 }
-
-const cases: Case[] = [
-    {
-        id: 1,
-        category: "CONSTRUCTION",
-        title: "Arslan Group",
-        description: "A fast-growing construction and home expert, ready to expand their digital footprint and reach new markets.",
-        image: "/images/case-1.png",
-        tags: ["BRAND STRATEGY & IDENTITY", "DIGITAL DEVELOPMENT", "CAMPAIGN DESIGN"],
-        href: "#",
-    },
-    {
-        id: 2,
-        category: "HOSPITALITY / HOTELS",
-        title: "Hotel Four Stories",
-        description: "Custom hotel website with multi-lingual structure, MEWS integration, and a premium visual experience.",
-        image: "/images/case-2.png",
-        tags: ["UI/UX DESIGN", "MULTILINGUAL CMS", "BOOKING INTEGRATION"],
-        href: "#",
-    },
-    {
-        id: 3,
-        category: "TELECOM",
-        title: "Avra Group",
-        description: "Complete rebranding and digital transformation for a leading telecommunications provider in the region.",
-        image: "/images/case-3.png",
-        tags: ["REBRANDING", "DIGITAL STRATEGY", "B2B PORTAL"],
-        href: "#",
-    },
-    {
-        id: 4,
-        category: "HEALTHCARE",
-        title: "Nova Clinics",
-        description: "Modern patient portal and brand refresh for a multi-specialty healthcare provider, focusing on accessibility.",
-        image: "/images/case-4.png",
-        tags: ["HEALTHCARE DESIGN", "PATIENT EXPERIENCE", "MOBILE APP"],
-        href: "#",
-    },
-    {
-        id: 5,
-        category: "LOGISTICS",
-        title: "Vanta Logistics",
-        description: "Streamlining end-to-end logistics with a new dashboard and customer-facing tracking platform.",
-        image: "/images/case-5.png",
-        tags: ["LOGISTICS TECH", "DASHBOARD DESIGN", "SYSTEM ARCHITECTURE"],
-        href: "#",
-    },
-];
 
 const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div
-            className="relative flex-shrink-0 w-[80vw] md:w-[40vw] lg:w-[28vw] h-[480px] snap-start group cursor-pointer"
+        <a
+            href={`/cases/${caseStudy.slug}`}
+            className="relative flex-shrink-0 w-[80vw] md:w-[40vw] lg:w-[28vw] h-[480px] snap-start group cursor-pointer block"
             onMouseEnter={() => setIsExpanded(true)}
             onMouseLeave={() => setIsExpanded(false)}
-            onClick={() => setIsExpanded(!isExpanded)}
         >
             <div className="absolute inset-0 rounded-2xl overflow-hidden border border-black/5 bg-white shadow-sm transition-all duration-500 ease-out">
                 {/* Default State Image & Overlay */}
                 <div className="relative w-full h-full overflow-hidden">
                     <motion.img
-                        src={caseStudy.image}
+                        src={caseStudy.thumbnail_url}
                         alt={caseStudy.title}
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         animate={{
@@ -102,12 +56,12 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
                             <div>
                                 <h3 className="text-2xl font-bold text-white mb-1.5">{caseStudy.title}</h3>
                                 <p className="text-white/80 text-xs line-clamp-2 max-w-[90%] font-medium">
-                                    {caseStudy.description}
+                                    {caseStudy.short_description}
                                 </p>
                             </div>
 
                             <div className="flex flex-wrap gap-1.5">
-                                {caseStudy.tags.slice(0, 2).map((tag, i) => (
+                                {caseStudy.what_we_did.slice(0, 2).map((tag, i) => (
                                     <span key={i} className="border border-white/20 px-2.5 py-0.5 rounded-full text-[8px] font-medium text-white/90 uppercase">
                                         {tag}
                                     </span>
@@ -117,14 +71,18 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
                     </motion.div>
 
                     {/* Bottom Blue Strip (Default) */}
-                    <motion.div
+                    <div
                         className="absolute bottom-0 left-0 right-0 h-12 bg-[#1E2BFF] flex items-center justify-between px-5"
-                        animate={{ y: isExpanded ? "100%" : 0 }}
-                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <span className="text-white font-bold text-[10px] tracking-widest uppercase">SEE WORK</span>
-                        <IconArrowRight className="text-white w-4 h-4" />
-                    </motion.div>
+                        <motion.div
+                            className="flex items-center justify-between w-full"
+                            animate={{ y: isExpanded ? "100%" : 0 }}
+                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                            <span className="text-white font-bold text-[10px] tracking-widest uppercase">SEE WORK</span>
+                            <IconArrowRight className="text-white w-4 h-4" />
+                        </motion.div>
+                    </div>
 
                     {/* Expanded State Content - Glassmorphism */}
                     <motion.div
@@ -137,12 +95,12 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
                             <div>
                                 <h3 className="text-2xl font-bold text-black leading-tight tracking-tight">{caseStudy.title}</h3>
                                 <p className="text-[#86868b] text-sm font-medium mt-2 leading-relaxed line-clamp-3">
-                                    {caseStudy.description}
+                                    {caseStudy.short_description}
                                 </p>
                             </div>
 
                             <div className="flex flex-wrap gap-1.5 pt-1">
-                                {caseStudy.tags.map((tag, i) => (
+                                {caseStudy.what_we_did.map((tag, i) => (
                                     <span key={i} className="bg-[#1E2BFF] px-3 py-1.5 rounded-full text-[8px] font-bold text-white tracking-wide uppercase">
                                         {tag}
                                     </span>
@@ -152,12 +110,40 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
                     </motion.div>
                 </div>
             </div>
-        </div>
+        </a>
     );
 };
 
+const CaseSkeleton = () => (
+    <div className="flex-shrink-0 w-[80vw] md:w-[40vw] lg:w-[28vw] h-[480px] rounded-2xl bg-neutral-100 animate-pulse border border-black/5" />
+);
+
 export default function FeaturedCases() {
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [cases, setCases] = useState<Case[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchFeaturedCases() {
+            try {
+                const { data, error } = await supabase
+                    .from('case_studies')
+                    .select('*')
+                    .eq('is_featured', true)
+                    .eq('published', true)
+                    .order('order_index', { ascending: true });
+
+                if (error) throw error;
+                setCases(data || []);
+            } catch (err) {
+                console.error("Error fetching cases:", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchFeaturedCases();
+    }, []);
 
     const scroll = (direction: "left" | "right") => {
         if (scrollRef.current) {
@@ -166,6 +152,8 @@ export default function FeaturedCases() {
             scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
         }
     };
+
+    if (!loading && cases.length === 0) return null;
 
     return (
         <section className="bg-white py-20 md:py-24 overflow-hidden">
@@ -181,10 +169,10 @@ export default function FeaturedCases() {
                         </p>
                     </div>
 
-                    <button className="bg-[#1E2BFF] font-bold text-white px-5 py-2.5 rounded-lg text-[9px] tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center gap-2 group whitespace-nowrap mb-1">
+                    <a href="/cases" className="bg-[#1E2BFF] font-bold text-white px-5 py-2.5 rounded-lg text-[9px] tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center gap-2 group whitespace-nowrap mb-1 no-underline">
                         VIEW MORE CASES
                         <IconArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -194,26 +182,31 @@ export default function FeaturedCases() {
                     className="flex gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-none px-[max(1.5rem,calc((100vw-80rem)/2))] pb-10 cursor-grab active:cursor-grabbing"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                    {cases.map((caseStudy) => (
-                        <CaseCard key={caseStudy.id} caseStudy={caseStudy} />
-                    ))}
+                    {loading ? (
+                        [1, 2, 3].map((i) => <CaseSkeleton key={i} />)
+                    ) : (
+                        cases.map((caseStudy) => (
+                            <CaseCard key={caseStudy.id} caseStudy={caseStudy} />
+                        ))
+                    )}
                 </div>
 
-                {/* Controls */}
-                <div className="flex justify-end gap-2 px-6 max-w-7xl mx-auto -mt-4">
-                    <button
-                        onClick={() => scroll("left")}
-                        className="w-10 h-10 flex items-center justify-center border border-black/5 rounded-lg hover:bg-black/5 transition-colors"
-                    >
-                        <IconChevronLeft className="w-5 h-5 text-black" />
-                    </button>
-                    <button
-                        onClick={() => scroll("right")}
-                        className="w-10 h-10 flex items-center justify-center border border-black/5 rounded-lg hover:bg-black/5 transition-colors"
-                    >
-                        <IconChevronRight className="w-5 h-5 text-black" />
-                    </button>
-                </div>
+                {!loading && cases.length > 0 && (
+                    <div className="flex justify-end gap-2 px-6 max-w-7xl mx-auto -mt-4">
+                        <button
+                            onClick={() => scroll("left")}
+                            className="w-10 h-10 flex items-center justify-center border border-black/5 rounded-lg hover:bg-black/5 transition-colors"
+                        >
+                            <IconChevronLeft className="w-5 h-5 text-black" />
+                        </button>
+                        <button
+                            onClick={() => scroll("right")}
+                            className="w-10 h-10 flex items-center justify-center border border-black/5 rounded-lg hover:bg-black/5 transition-colors"
+                        >
+                            <IconChevronRight className="w-5 h-5 text-black" />
+                        </button>
+                    </div>
+                )}
             </div>
         </section>
     );

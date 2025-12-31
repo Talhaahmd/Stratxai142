@@ -16,7 +16,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
 interface CarouselProps {
-    items: React.JSX.Element[];
+    items: JSX.Element[];
     initialScroll?: number;
 }
 
@@ -25,6 +25,7 @@ type Card = {
     title: string;
     category: string;
     content: React.ReactNode;
+    href?: string;
 };
 
 export const CarouselContext = createContext<{
@@ -82,7 +83,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     };
 
     const isMobile = () => {
-        return window && window.innerWidth < 768;
+        return typeof window !== "undefined" && window.innerWidth < 768;
     };
 
     return (
@@ -162,7 +163,7 @@ export const Card = ({
     layout?: boolean;
 }) => {
     const [open, setOpen] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const { onCardClose } = useContext(CarouselContext);
 
     useEffect(() => {
@@ -185,6 +186,10 @@ export const Card = ({
     useOutsideClick(containerRef, () => handleClose());
 
     const handleOpen = () => {
+        if (card.href) {
+            window.location.href = card.href;
+            return;
+        }
         setOpen(true);
     };
 
