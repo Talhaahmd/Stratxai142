@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { StaggerGroup, StaggerItem } from './motion/StaggerGroup';
+import { cn } from '@/lib/utils';
 
 export interface ServiceItem {
     id: string;
@@ -68,43 +69,60 @@ const ServicesSection: React.FC = () => {
                         </p>
                     </div>
 
-                    {/* Right Side: Services List */}
                     <div className="flex flex-col border-t border-white/10">
-                        {services.map((service) => (
-                            <a
-                                key={service.id}
-                                href={`/services/${service.id}`}
-                                className="group relative border-b border-white/10 py-10 md:py-12 cursor-pointer block"
-                                onMouseEnter={() => setActiveItem(service.id)}
-                                onMouseLeave={() => setActiveItem(null)}
-                            >
-                                <div className="flex items-start md:items-center justify-between gap-8">
-                                    <div className="flex gap-8 md:gap-12 items-start">
-                                        <span className="text-white/30 text-xs md:text-sm font-medium pt-1 md:pt-0">
-                                            {service.number}
-                                        </span>
-                                        <div className="flex flex-col gap-2.5">
-                                            <h3 className="text-xl md:text-2xl lg:text-3xl font-medium tracking-tight group-hover:translate-x-3 transition-transform duration-500">
-                                                {service.title}
-                                            </h3>
-                                            <p className="text-[13px] md:text-sm text-white/40 max-w-md group-hover:text-white/70 transition-colors duration-500 leading-relaxed font-medium">
-                                                {service.description}
-                                            </p>
+                        <StaggerGroup stagger={0.15}>
+                            {services.map((service) => (
+                                <StaggerItem key={service.id} className="w-full">
+                                    <a
+                                        href={`/services/${service.id}`}
+                                        className="group relative border-b border-white/10 py-10 md:py-12 cursor-pointer block hover:-translate-y-1 hover:border-white/20 transition-all duration-500 ease-out"
+                                        onMouseEnter={() => setActiveItem(service.id)}
+                                        onMouseLeave={() => setActiveItem(null)}
+                                    >
+                                        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-[0.22,1,0.36,1]" />
+
+                                        <div className="flex items-start md:items-center justify-between gap-8">
+                                            <div className="flex gap-8 md:gap-12 items-start">
+                                                <span className="text-white/30 text-xs md:text-sm font-medium pt-1 md:pt-0 group-hover:text-white/60 transition-colors duration-300">
+                                                    {service.number}
+                                                </span>
+                                                <div className="flex flex-col gap-2.5">
+                                                    <h3 className="text-xl md:text-2xl lg:text-3xl font-medium tracking-tight group-hover:translate-x-6 transition-transform duration-500 ease-[0.22,1,0.36,1]">
+                                                        {service.title}
+                                                    </h3>
+                                                    <p className="text-[13px] md:text-sm text-white/40 max-w-md group-hover:text-white/70 transition-colors duration-500 leading-relaxed font-medium group-hover:translate-x-2 delay-75">
+                                                        {service.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="hidden md:block">
+                                                <div className="relative overflow-hidden w-8 h-8 flex items-center justify-center">
+                                                    <svg
+                                                        className={cn(
+                                                            "w-6 h-6 text-white/20 group-hover:text-white transition-all duration-500 absolute",
+                                                            activeItem === service.id ? "translate-x-[150%] opacity-0" : "translate-x-0 opacity-100"
+                                                        )}
+                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                    </svg>
+
+                                                    <svg
+                                                        className={cn(
+                                                            "w-6 h-6 text-[#1E2BFF] transition-all duration-500 absolute",
+                                                            activeItem === service.id ? "translate-x-0 opacity-100" : "-translate-x-[150%] opacity-0"
+                                                        )}
+                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="hidden md:block">
-                                        <motion.div
-                                            animate={{ rotate: activeItem === service.id ? 45 : 0 }}
-                                            transition={{ duration: 0.3 }}
-                                        >
-                                            <svg className="w-6 h-6 md:w-8 md:h-8 text-white/20 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                            </svg>
-                                        </motion.div>
-                                    </div>
-                                </div>
-                            </a>
-                        ))}
+                                    </a>
+                                </StaggerItem>
+                            ))}
+                        </StaggerGroup>
                     </div>
                 </div>
             </div>

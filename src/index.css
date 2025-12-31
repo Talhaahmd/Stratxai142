@@ -22,6 +22,16 @@
 
 body {
   margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
 }
 
 @keyframes marquee-up {
@@ -80,4 +90,96 @@ body {
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 20px 20px;
+}
+
+/* Animated gradient blob keyframes */
+@keyframes hero-first {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(140px, -80px) rotate(180deg);
+  }
+
+  100% {
+    transform: translate(0px, 0px) rotate(360deg);
+  }
+}
+
+@keyframes hero-second {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(-160px, 90px) rotate(-160deg);
+  }
+
+  100% {
+    transform: translate(0px, 0px) rotate(-360deg);
+  }
+}
+
+@keyframes hero-third {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(120px, 120px) rotate(160deg);
+  }
+
+  100% {
+    transform: translate(0px, 0px) rotate(360deg);
+  }
+}
+
+@keyframes hero-fourth {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(-120px, -120px) rotate(-180deg);
+  }
+
+  100% {
+    transform: translate(0px, 0px) rotate(-360deg);
+  }
+}
+
+@keyframes hero-fifth {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(200px, 40px) rotate(200deg);
+  }
+
+  100% {
+    transform: translate(0px, 0px) rotate(360deg);
+  }
+}
+
+/* Animation utility classes */
+.animate-first {
+  animation: hero-first 12s ease-in-out infinite;
+}
+
+.animate-second {
+  animation: hero-second 14s ease-in-out infinite;
+}
+
+.animate-third {
+  animation: hero-third 16s ease-in-out infinite;
+}
+
+.animate-fourth {
+  animation: hero-fourth 18s ease-in-out infinite;
+}
+
+.animate-fifth {
+  animation: hero-fifth 20s ease-in-out infinite;
 }

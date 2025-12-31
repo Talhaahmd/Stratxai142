@@ -13,7 +13,7 @@ const BrandStrategy = () => {
                     Brand Strategy & Identity
                 </h1>
                 <p className="text-xl text-neutral-500 max-w-2xl">
-                    Coming soon. We are currently polishing this service page to match the Klarus AI standard.
+                    Coming soon. We are currently polishing this service page to match the StratX AI standard.
                 </p>
                 <div className="mt-12">
                     <a href="/" className="bg-black text-white px-8 py-4 rounded-lg font-bold text-xs tracking-widest uppercase hover:bg-neutral-800 transition-colors">

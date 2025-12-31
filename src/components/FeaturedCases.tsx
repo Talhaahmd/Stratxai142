@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { IconArrowRight, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { ParallaxY } from "./motion/Parallax";
+import { Reveal } from "./motion/Reveal";
 import { supabase } from "@/lib/supabaseClient";
 
 export interface Case {
@@ -26,43 +28,50 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
             onMouseEnter={() => setIsExpanded(true)}
             onMouseLeave={() => setIsExpanded(false)}
         >
-            <div className="absolute inset-0 rounded-2xl overflow-hidden border border-black/5 bg-white shadow-sm transition-all duration-500 ease-out">
+            <div className="absolute inset-0 rounded-2xl overflow-hidden border border-black/5 bg-white shadow-sm transition-all duration-500 ease-out hover:shadow-xl">
                 {/* Default State Image & Overlay */}
-                <div className="relative w-full h-full overflow-hidden">
-                    <motion.img
-                        src={caseStudy.thumbnail_url}
-                        alt={caseStudy.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        animate={{
-                            height: isExpanded ? "40%" : "100%",
-                            y: 0
-                        }}
-                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    />
+                <div className="relative w-full h-full overflow-hidden bg-neutral-900">
+                    <div className="absolute inset-0 w-full h-[120%] -top-[10%]">
+                        <ParallaxY speed={-30} className="w-full h-full">
+                            <motion.img
+                                src={caseStudy.thumbnail_url}
+                                alt={caseStudy.title}
+                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                animate={{
+                                    opacity: isExpanded ? 0.4 : 1
+                                }}
+                                transition={{ duration: 0.5 }}
+                            />
+                        </ParallaxY>
+                    </div>
 
                     {/* Default State Content Overlay */}
                     <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent p-5 flex flex-col justify-between"
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6 flex flex-col justify-between"
                         animate={{ opacity: isExpanded ? 0 : 1 }}
                         transition={{ duration: 0.3 }}
                     >
                         <div className="flex">
-                            <span className="bg-white/10 backdrop-blur-md border border-white/20 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white tracking-widest uppercase">
+                            <span className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[9px] font-bold text-white tracking-widest uppercase">
                                 ● {caseStudy.category}
                             </span>
                         </div>
 
                         <div className="space-y-3">
                             <div>
-                                <h3 className="text-2xl font-bold text-white mb-1.5">{caseStudy.title}</h3>
-                                <p className="text-white/80 text-xs line-clamp-2 max-w-[90%] font-medium">
-                                    {caseStudy.short_description}
-                                </p>
+                                <Reveal variant="fadeUp" duration={0.5}>
+                                    <h3 className="text-2xl font-bold text-white mb-2 leading-tight">{caseStudy.title}</h3>
+                                </Reveal>
+                                <Reveal variant="fadeUp" delay={0.1} duration={0.5}>
+                                    <p className="text-white/80 text-sm line-clamp-2 max-w-[90%] font-medium leading-relaxed">
+                                        {caseStudy.short_description}
+                                    </p>
+                                </Reveal>
                             </div>
 
-                            <div className="flex flex-wrap gap-1.5">
+                            <div className="flex flex-wrap gap-2">
                                 {caseStudy.what_we_did.slice(0, 2).map((tag, i) => (
-                                    <span key={i} className="border border-white/20 px-2.5 py-0.5 rounded-full text-[8px] font-medium text-white/90 uppercase">
+                                    <span key={i} className="border border-white/20 px-3 py-1 rounded-full text-[9px] font-medium text-white/90 uppercase tracking-wide">
                                         {tag}
                                     </span>
                                 ))}
@@ -72,41 +81,20 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
 
                     {/* Bottom Blue Strip (Default) */}
                     <div
-                        className="absolute bottom-0 left-0 right-0 h-12 bg-[#1E2BFF] flex items-center justify-between px-5"
+                        className="absolute bottom-0 left-0 right-0 h-14 bg-[#1E2BFF] flex items-center justify-between px-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"
                     >
-                        <motion.div
-                            className="flex items-center justify-between w-full"
-                            animate={{ y: isExpanded ? "100%" : 0 }}
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                        >
-                            <span className="text-white font-bold text-[10px] tracking-widest uppercase">SEE WORK</span>
-                            <IconArrowRight className="text-white w-4 h-4" />
-                        </motion.div>
+                        <div className="flex items-center justify-between w-full text-white">
+                            <span className="font-bold text-[10px] tracking-widest uppercase">View Case Study</span>
+                            <IconArrowRight className="w-4 h-4" />
+                        </div>
                     </div>
 
                     {/* Expanded State Content - Glassmorphism */}
                     <motion.div
-                        className="absolute top-[40%] inset-x-0 bottom-0 bg-white/70 backdrop-blur-xl p-6 overflow-hidden border-t border-white/30"
-                        initial={{ y: "100%" }}
-                        animate={{ y: isExpanded ? 0 : "100%" }}
-                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute inset-0 bg-black/40 backdrop-blur-md p-8 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{ pointerEvents: 'none' }}
                     >
-                        <div className="space-y-4 h-full flex flex-col justify-center">
-                            <div>
-                                <h3 className="text-2xl font-bold text-black leading-tight tracking-tight">{caseStudy.title}</h3>
-                                <p className="text-[#86868b] text-sm font-medium mt-2 leading-relaxed line-clamp-3">
-                                    {caseStudy.short_description}
-                                </p>
-                            </div>
-
-                            <div className="flex flex-wrap gap-1.5 pt-1">
-                                {caseStudy.what_we_did.map((tag, i) => (
-                                    <span key={i} className="bg-[#1E2BFF] px-3 py-1.5 rounded-full text-[8px] font-bold text-white tracking-wide uppercase">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
+                        {/* Simplified expanded state to focus on visual cleanness */}
                     </motion.div>
                 </div>
             </div>

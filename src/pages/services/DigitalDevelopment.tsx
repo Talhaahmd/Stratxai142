@@ -8,6 +8,7 @@ import Footer from "../../components/Footer";
 import StickyScrollContentSection from "../../components/services/StickyScrollContentSection";
 import ProjectShowcase from "../../components/services/ProjectShowcase";
 import ServicesSection from "../../components/ServicesSection";
+import { Reveal } from "../../components/motion/Reveal";
 
 const PROJECTS = [
     {
@@ -56,14 +57,18 @@ export default function DigitalDevelopment() {
                             SERVICES
                         </div>
 
-                        <h1 className="text-[44px] leading-[1.02] tracking-tight font-bold sm:text-[54px] md:text-[76px]">
-                            Digital Development
-                        </h1>
+                        <Reveal variant="fadeUp" duration={0.8}>
+                            <h1 className="text-[44px] leading-[1.02] tracking-tight font-bold sm:text-[54px] md:text-[76px]">
+                                Digital Development
+                            </h1>
+                        </Reveal>
 
-                        <p className="mt-5 sm:mt-6 text-neutral-500 text-base sm:text-lg md:text-xl leading-relaxed max-w-[760px]">
-                            We build next-level websites and webshops with fast code, smart architecture,
-                            and a seamless brand experience designed for lasting commercial results.
-                        </p>
+                        <Reveal variant="fadeUp" delay={0.2} duration={0.8}>
+                            <p className="mt-5 sm:mt-6 text-neutral-500 text-base sm:text-lg md:text-xl leading-relaxed max-w-[760px]">
+                                We build next-level websites and webshops with fast code, smart architecture,
+                                and a seamless brand experience designed for lasting commercial results.
+                            </p>
+                        </Reveal>
                     </div>
                 </div>
             </section>

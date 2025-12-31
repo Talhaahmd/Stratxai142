@@ -111,7 +111,7 @@ export const Header = () => {
                 Revolutionize your <br className="hidden md:block" /> AI workflows
             </h1>
             <p className="max-w-2xl text-base md:text-xl mt-8 text-neutral-400 font-medium leading-relaxed">
-                Explore Klarus' curation of high-performance AI prompts designed to scale intelligence,
+                Explore StratX's curation of high-performance AI prompts designed to scale intelligence,
                 automate creative labor, and unlock the next frontier of digital innovation.
             </p>
         </div>
