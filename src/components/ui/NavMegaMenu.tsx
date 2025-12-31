@@ -92,7 +92,7 @@ export const NavMegaMenu = ({ title, cases, visible: _visible }: NavMegaMenuProp
                                         {featuredCases.map((caseItem) => (
                                             <motion.a
                                                 key={caseItem.id}
-                                                href={caseItem.href}
+                                                href={`/cases/${caseItem.slug}`}
                                                 className="group block"
                                                 whileHover={{ y: -4 }}
                                                 transition={{ duration: 0.2 }}
@@ -101,7 +101,7 @@ export const NavMegaMenu = ({ title, cases, visible: _visible }: NavMegaMenuProp
                                                     {/* Image */}
                                                     <div className="aspect-[4/3] overflow-hidden bg-neutral-100">
                                                         <img
-                                                            src={caseItem.image}
+                                                            src={caseItem.thumbnail_url}
                                                             alt={caseItem.title}
                                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                                         />

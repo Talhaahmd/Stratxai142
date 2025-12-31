@@ -210,4 +210,45 @@ export default function FeaturedCases() {
             </div>
         </section>
     );
+
 }
+
+// Dummy data for exports if needed by other components
+export const cases: Case[] = [
+    {
+        id: "1",
+        category: "Fintech",
+        title: "Revolutionizing Digital Banking",
+        short_description: "A complete overhaul of the digital banking experience for a leading fintech startup.",
+        thumbnail_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop",
+        what_we_did: ["UX/UI Design", "Mobile App"],
+        slug: "digital-banking",
+        is_featured: true,
+        published: true,
+        order_index: 0
+    },
+    {
+        id: "2",
+        category: "E-commerce",
+        title: "Global Fashion Marketplace",
+        short_description: "Scaling a fashion marketplace to reach millions of users worldwide with a seamless shopping experience.",
+        thumbnail_url: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop",
+        what_we_did: ["Web Development", "Strategy"],
+        slug: "fashion-marketplace",
+        is_featured: true,
+        published: true,
+        order_index: 1
+    },
+    {
+        id: "3",
+        category: "Healthcare",
+        title: "AI-Powered Diagnostics",
+        short_description: "Leveraging diagnostic AI to improve patient outcomes and streamline medical workflows.",
+        thumbnail_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1470&auto=format&fit=crop",
+        what_we_did: ["AI Integration", "Product Design"],
+        slug: "ai-diagnostics",
+        is_featured: true,
+        published: true,
+        order_index: 2
+    }
+];
