@@ -27,25 +27,22 @@ export default function CaseGoals({ goals }: CaseGoalsProps) {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {goals.map((goal, i) => (
                         <div
                             key={i}
-                            className={`flex flex-col justify-between p-8 md:p-10 rounded-2xl h-[340px] md:h-[400px] shadow-sm transition-transform duration-500 hover:scale-[1.02] ${goal.variant === 'light' ? 'bg-white text-black border border-black/5' :
-                                goal.variant === 'dark' ? 'bg-black text-white border border-white/10' :
-                                    'bg-[#1E2BFF] text-white border border-white/10'
+                            className={`flex flex-col justify-between p-8 md:p-10 rounded-2xl h-[280px] md:h-[320px] shadow-sm transition-transform duration-500 hover:scale-[1.02] ${goal.variant === 'blue'
+                                ? 'bg-[#1E2BFF] text-white border border-white/10'
+                                : 'bg-black text-white border border-white/10'
                                 }`}
                         >
-                            <div className="text-5xl md:text-6xl font-black opacity-20">
-                                {goal.goal_number.toString().padStart(2, '0')}
-                            </div>
+                            {/* No Number Display */}
 
-                            <div className="space-y-3">
+                            <div className="space-y-4 mt-auto">
                                 <h3 className="text-xl md:text-2xl font-bold tracking-tight">
                                     {goal.title}
                                 </h3>
-                                <p className={`text-[13px] md:text-sm leading-relaxed font-medium ${(goal.variant === 'light') ? 'text-black/70' : 'text-white/80'
-                                    }`}>
+                                <p className="text-[13px] md:text-sm leading-relaxed font-medium text-white/80">
                                     {goal.description}
                                 </p>
                             </div>

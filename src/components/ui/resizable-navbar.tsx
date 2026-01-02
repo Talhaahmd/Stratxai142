@@ -245,7 +245,7 @@ export const NavbarLogo = ({ visible: _visible }: { visible?: boolean }) => {
                         exit={{ opacity: 0, x: -10 }}
                         className="text-lg font-bold tracking-tight text-white dark:text-white whitespace-nowrap"
                     >
-                        StratX AI
+                        Klarus AI
                     </motion.span>
                 )}
             </AnimatePresence>

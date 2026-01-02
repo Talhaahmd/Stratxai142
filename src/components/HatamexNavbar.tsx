@@ -146,10 +146,10 @@ export default function HatamexNavbar({ useSpacer = true }: { useSpacer?: boolea
                                 <a href="/" className="flex items-center">
                                     <img
                                         src="https://res.cloudinary.com/dt93sahp2/image/upload/v1766958848/Untitled_design_mrev4u.png"
-                                        alt="StratX AI"
+                                        alt="Klarus AI"
                                         className={cn(
                                             "w-auto transition-all duration-300",
-                                            scrolled ? "h-12 md:h-14" : "h-16 md:h-18 lg:h-20"
+                                            scrolled ? "h-10 md:h-14" : "h-14 md:h-20"
                                         )}
                                     />
                                 </a>

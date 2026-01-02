@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import HatamexNavbar from "@/components/HatamexNavbar";
 import CaseHero from "@/components/cases/details/CaseHero";
 import CaseDescription from "@/components/cases/details/CaseDescription";
-import CaseGoals from "@/components/cases/details/CaseGoals";
 import CaseImageStack from "@/components/cases/details/CaseImageStack";
 import CaseTechnologies from "@/components/cases/details/CaseTechnologies";
 import FeaturedCases from "@/components/FeaturedCases";
@@ -41,6 +40,7 @@ export default function CaseStudyDetail() {
 
             setLoading(true);
             setError(false);
+            console.log("Fetching case study for slug:", slug);
 
             try {
                 const { data, error } = await supabase
@@ -50,8 +50,17 @@ export default function CaseStudyDetail() {
                     .eq('published', true)
                     .single();
 
-                if (error || !data) throw error || new Error("Not found");
+                if (error) {
+                    console.error("Supabase error:", error);
+                    throw error;
+                }
 
+                if (!data) {
+                    console.error("No data found for slug:", slug);
+                    throw new Error("Not found");
+                }
+
+                console.log("Case study data received:", data);
                 setCaseData(data);
             } catch (err) {
                 console.error("Error fetching case study:", err);
@@ -102,7 +111,7 @@ export default function CaseStudyDetail() {
                 category={caseData.category}
                 short_description={caseData.short_description}
                 hero_image_url={caseData.hero_image_url}
-                what_we_did={caseData.what_we_did}
+                what_we_did={caseData.what_we_did || []}
             />
 
             <CaseDescription
@@ -111,16 +120,14 @@ export default function CaseStudyDetail() {
                 description_long={caseData.description_long}
                 company_info={caseData.company_info}
                 thumbnail_url={caseData.thumbnail_url}
-                what_we_did={caseData.what_we_did}
+                what_we_did={caseData.what_we_did || []}
             />
 
-            <CaseGoals goals={caseData.goals} />
-
-            <CaseImageStack images={caseData.media_gallery} />
+            <CaseImageStack images={caseData.media_gallery || []} />
 
             <CaseTechnologies
-                technologies={caseData.technologies}
-                results_description={caseData.results_description}
+                technologies={caseData.technologies || []}
+                results_description={caseData.results_description || ""}
             />
 
             <FeaturedCases />

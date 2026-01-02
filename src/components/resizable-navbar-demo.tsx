@@ -14,8 +14,11 @@ import {
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
-import { cases } from "@/components/FeaturedCases";
+import type { Case } from "@/components/FeaturedCases";
 import { services } from "@/components/ServicesSection";
+
+// Mock cases data for demo
+const cases: Case[] = [];
 
 export default function NavbarDemo() {
     const aboutUsItems = [

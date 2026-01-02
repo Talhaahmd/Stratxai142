@@ -70,7 +70,7 @@ export default function CaseTechnologies({ technologies, results_description }: 
 }
 
 function WordReveal({ progress, range, text }: { progress: any; range: [number, number]; text: string }) {
-    const letters = (text + " ").split("");
+    const letters = text.split("");
 
     return (
         <span className="inline-block">
@@ -88,6 +88,7 @@ function WordReveal({ progress, range, text }: { progress: any; range: [number, 
                     </LetterReveal>
                 );
             })}
+            <span className="inline-block">&nbsp;</span>
         </span>
     );
 }

@@ -110,21 +110,21 @@ const ResultsSection: React.FC = () => {
                             into better performance, higher conversions and stronger
                             customer relationships and you see that directly in the numbers.
                         </AnimatedText>
-                        <button className="h-9 md:h-10 px-4 md:px-5 bg-[#1E2BFF] text-white text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center gap-3 group">
+                        <a href="/about-us" className="h-9 md:h-10 px-4 md:px-5 bg-[#1E2BFF] text-white text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center gap-3 group">
                             LEARN MORE ABOUT US
                             <svg className="w-3 h-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 {/* Stats Row */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-y border-black/10 mb-10 md:mb-12">
                     {[
-                        { val: "95%", cap: "Clients who stay because we consistently deliver results" },
-                        { val: "40%", cap: "Conversion growth driven by thoughtful design and optimisation" },
-                        { val: "99%", cap: "Reliable, secure systems that perform with unwavering stability" }
+                        { val: "95%", cap: "Clients who stayed with us for over a year because we consistently deliver results" },
+                        { val: "4+", cap: "Multinational Companies signed up with us in last 2 years" },
+                        { val: "100%", cap: "Reliable, secure systems that perform with unwavering stability" }
                     ].map((stat, i) => (
                         <div key={i} className={cn(
                             "py-8 md:py-10 px-6 md:px-8 flex flex-col gap-2",
@@ -150,17 +150,20 @@ const ResultsSection: React.FC = () => {
                         </AnimatedText>
                     </div>
                     <div className="flex justify-start pt-1">
-                        <button className="h-9 md:h-10 px-5 md:px-6 bg-[#1E2BFF] text-white text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center gap-3 group">
+                        <a href="/contact" className="h-9 md:h-10 px-5 md:px-6 bg-[#1E2BFF] text-white text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center gap-3 group">
                             LET'S WORK TOGETHER
                             <svg className="w-3 h-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
-                        </button>
+                        </a>
                     </div>
                 </div>
 
-                {/* Feature Cards Grid - Now using HoverCard logic */}
+                {/* Feature Cards Grid - Now using HoverCard logic */}{/* Feature Cards Grid - Updated Visual Logic */}{/* Feature Cards Grid - Corrected Hover Behavior */}
+                {/* Feature Cards Grid - Dark Image Base + Hover GIF */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+
+                    {/* CREATIVITY */}
                     <div
                         ref={ref1}
                         className={cn(
@@ -171,11 +174,12 @@ const ResultsSection: React.FC = () => {
                         <HoverCard
                             title="Creativity"
                             description="Creativity isn't decoration. It's the starting point of progress. We translate your brand into a story that carries strength."
-                            bgImage="https://images.unsplash.com/photo-1476842634003-7dcca8f832de?auto=format&fit=crop&w=1650&q=80"
-                            hoverGif="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWlodTF3MjJ3NnJiY3Rlc2J0ZmE0c28yeWoxc3gxY2VtZzA5ejF1NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/syEfLvksYQnmM/giphy.gif"
+                            bgImage="https://images.pexels.com/photos/16560315/pexels-photo-16560315.jpeg"
+                            hoverGif="https://i.giphy.com/media/syEfLvksYQnmM/giphy.gif"
                         />
                     </div>
 
+                    {/* TECHNOLOGY */}
                     <div
                         ref={ref2}
                         className={cn(
@@ -185,12 +189,13 @@ const ResultsSection: React.FC = () => {
                     >
                         <HoverCard
                             title="Technology"
-                            description="Technology shouldn't be complicated. It should work, connect and elevate. We build digital foundations that scale."
-                            bgImage="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1650&q=80"
-                            hoverGif="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp5Znh6ZWR6Znh6ZWR6Znh6ZWR6Znh6ZWR6Znh6ZWR6Znh6ZWR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKSjPQC1Q_Vp_7/giphy.gif"
+                            description="Technology shouldn't be complicated. It should work, connect, and elevate. We build digital foundations that scale."
+                            bgImage="https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg "
+                            hoverGif="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif"
                         />
                     </div>
 
+                    {/* CONVERSION */}
                     <div
                         ref={ref3}
                         className={cn(
@@ -200,12 +205,14 @@ const ResultsSection: React.FC = () => {
                     >
                         <HoverCard
                             title="Conversion"
-                            description="Results don't happen by accident. They come from focused choices and journeys built to do exactly what they need to."
-                            bgImage="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1650&q=80"
-                            hoverGif="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3p5Znh6ZWR6Znh6ZWR6Znh6ZWR6Znh6ZWR6Znh6ZWR6Znh6ZWR6JmVwPXYxX2ludGVybm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lTjJ8z8_v0_7/giphy.gif"
+                            description="Results don't happen by accident. They come from focused decisions and journeys engineered to convert."
+                            bgImage="https://images.pexels.com/photos/6120215/pexels-photo-6120215.jpeg"
+                            hoverGif="https://media.giphy.com/media/l46Cy1rHbQ92uuLXa/giphy.gif"
                         />
                     </div>
+
                 </div>
+
 
             </div>
         </section>

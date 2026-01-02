@@ -17,7 +17,7 @@ const aboutItems: AboutItem[] = [
     {
         icon: <IconUsers className="w-8 h-8" />,
         title: "Our Story",
-        description: "Learn about our journey, values, and the team behind StratX AI.",
+        description: "Learn about our journey, values, and the team behind Klarus AI.",
         link: "#story"
     },
     {
@@ -100,7 +100,7 @@ export const NavAboutMegaMenu = ({ title }: NavAboutMegaMenuProps) => {
                                 <div className="bg-white rounded-2xl shadow-2xl border border-neutral-100 p-10">
                                     {/* Header */}
                                     <div className="flex items-center justify-between mb-8">
-                                        <h3 className="text-2xl font-bold text-black">About StratX AI</h3>
+                                        <h3 className="text-2xl font-bold text-black">About Klarus AI</h3>
                                         <a
                                             href="#about"
                                             className="flex items-center gap-2 text-sm font-medium text-neutral-600 hover:text-black transition-colors"

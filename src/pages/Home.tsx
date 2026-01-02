@@ -1,6 +1,5 @@
 import HatamexNavbar from '../components/HatamexNavbar';
 import HomeHeroHatamex from '../components/home/HomeHeroHatamex';
-import TrustedSection from '../components/TrustedSection';
 import CinematicSection from '../components/CinematicSection';
 import ResultsSection from '../components/ResultsSection';
 import AppleCardsCarouselDemo from '../components/AppleCardsCarouselDemo';
@@ -14,14 +13,13 @@ export default function Home() {
         <div className="min-h-screen bg-black text-white font-sans selection:bg-[#1E2BFF] selection:text-white">
             <HatamexNavbar />
             <HomeHeroHatamex />
-            <TrustedSection />
             <ServicesSection />
-            <CinematicSection />
-            <ResultsSection />
             <AppleCardsCarouselDemo />
+            <ResultsSection />
+            <CinematicSection />
             <FeaturedCases />
             <BookACall theme="dark" />
-            <Footer theme="light" />
+            <Footer theme="dark" />
         </div>
     );
 }

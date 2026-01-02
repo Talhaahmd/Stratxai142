@@ -4,8 +4,10 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 
 interface CaseMedia {
-    image_url: string;
-    alt: string;
+    image_url?: string;
+    url?: string;
+    src?: string;
+    alt?: string;
 }
 
 interface CaseImageStackProps {
@@ -20,6 +22,8 @@ function ParallaxImage({ src, alt }: { src: string; alt: string }) {
     });
 
     const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
+    if (!src) return null;
 
     return (
         <div ref={ref} className="relative h-screen w-full overflow-hidden">
@@ -41,7 +45,7 @@ export default function CaseImageStack({ images }: CaseImageStackProps) {
             {images.map((img, i) => (
                 <ParallaxImage
                     key={i}
-                    src={img.image_url}
+                    src={img.image_url || img.url || img.src || ""}
                     alt={img.alt || `Showcase ${i + 1}`}
                 />
             ))}

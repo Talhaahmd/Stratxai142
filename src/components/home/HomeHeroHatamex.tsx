@@ -5,26 +5,23 @@ import { motion, useAnimationFrame } from "motion/react";
 import { IconDots } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
-// Premium placeholder images - expanded set
+// Premium placeholder images
 const images = [
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=1000&fit=crop', // laptop code
-    'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=1000&fit=crop', // office team
-    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=1000&fit=crop', // analytics
-    'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=1000&fit=crop', // phone mockup
-    'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=1000&fit=crop', // office workspace
-    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=1000&fit=crop', // blurred office
-    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=1000&fit=crop', // team collaboration
-    'https://images.unsplash.com/photo-1551836022-4c4c79ecde51?w=800&h=1000&fit=crop', // laptop on desk
-    'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=1000&fit=crop', // marketing meeting
-    'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=1000&fit=crop', // business planning
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=1000&fit=crop', // team success
-    'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=1000&fit=crop', // creative workspace
-    'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=1000&fit=crop', // video call
-    'https://images.unsplash.com/photo-1552581234-26160f608093?w=800&h=1000&fit=crop', // strategy session
-    'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&h=1000&fit=crop', // presentation
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=1000&fit=crop",
+    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=1000&fit=crop",
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=1000&fit=crop",
+    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=1000&fit=crop",
+    "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=1000&fit=crop",
+    "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=1000&fit=crop",
+    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=1000&fit=crop",
+    "https://images.unsplash.com/photo-1551836022-4c4c79ecde51?w=800&h=1000&fit=crop",
 ];
 
-function AnimatedImageColumn({ images, direction = "up", className }: {
+function AnimatedImageColumn({
+    images,
+    direction = "up",
+    className,
+}: {
     images: string[];
     direction?: "up" | "down";
     className?: string;
@@ -35,14 +32,10 @@ function AnimatedImageColumn({ images, direction = "up", className }: {
     useAnimationFrame((_t, delta) => {
         if (!ref.current) return;
 
-        // Slow speed: 20px per second
         const speed = direction === "up" ? -20 : 20;
         yOffset.current += (speed * delta) / 1000;
 
-        // Get total height of one set of images
         const totalHeight = ref.current.scrollHeight / 2;
-
-        // Reset when we've scrolled one full set
         if (Math.abs(yOffset.current) >= totalHeight) {
             yOffset.current = 0;
         }
@@ -50,14 +43,16 @@ function AnimatedImageColumn({ images, direction = "up", className }: {
         ref.current.style.transform = `translateY(${yOffset.current}px)`;
     });
 
-    // Duplicate images for infinite scroll
     const duplicatedImages = [...images, ...images];
 
     return (
         <div className={cn("relative overflow-hidden", className)}>
             <div ref={ref} className="flex flex-col gap-4">
                 {duplicatedImages.map((img, idx) => (
-                    <div key={idx} className="relative aspect-[4/5] rounded-xl overflow-hidden flex-shrink-0">
+                    <div
+                        key={idx}
+                        className="relative aspect-[4/5] rounded-xl overflow-hidden flex-shrink-0"
+                    >
                         <img
                             src={img}
                             alt=""
@@ -77,26 +72,27 @@ export default function HomeHeroHatamex() {
             <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20 lg:py-24">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-                    {/* Left Column - Content */}
+                    {/* Left Column */}
                     <div className="flex flex-col justify-center space-y-8">
 
-                        {/* NOW CREATING Badge */}
+                        {/* BADGE — TEXT ONLY CHANGED */}
                         <div className="flex items-center gap-3">
                             <div className="h-[1px] w-12 bg-white/20" />
                             <div className="w-2 h-2 rounded-full bg-green-500" />
                             <span className="text-[11px] font-medium tracking-[0.2em] text-white/60 uppercase">
-                                NOW CREATING
+                                BOOK A CALL TODAY AND GET A FREE WEBSITE AUDIT
                             </span>
                         </div>
 
                         {/* Main Heading */}
                         <h1 className="text-5xl lg:text-6xl font-normal text-white leading-[0.95] tracking-tight max-w-xl">
-                            We fuel your digital marketing needs
+                            Double your leads with AI-powered growth systems
                         </h1>
 
-                        {/* Subtitle */}
-                        <p className="text-sm md:text-base text-white/70 leading-relaxed max-w-lg font-medium">
-                            Generate 2x More Leads Using AI-Powered Growth Strategies
+                        {/* Paragraph */}
+                        <p className="text-sm md:text-base text-white/60 leading-relaxed max-w-lg font-normal">
+                            Meta and Google Ads campaigns built on continuous testing and
+                            conversion tracking for measurable growth.
                         </p>
 
                         {/* CTA Buttons */}
@@ -112,31 +108,21 @@ export default function HomeHeroHatamex() {
                         </div>
                     </div>
 
-                    {/* Right Column - Animated Image Collage (Desktop) */}
+                    {/* Right Column – Desktop */}
                     <div className="hidden lg:block relative h-[600px]">
-                        {/* Gradient fade overlays */}
-                        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0B0B0B] to-transparent z-10 pointer-events-none" />
-                        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0B0B0B] to-transparent z-10 pointer-events-none" />
+                        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0B0B0B] to-transparent z-10" />
+                        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0B0B0B] to-transparent z-10" />
 
-                        {/* Two columns */}
                         <div className="grid grid-cols-2 gap-4 h-full">
-                            <AnimatedImageColumn
-                                images={images.slice(0, 4)}
-                                direction="up"
-                                className="h-full"
-                            />
-                            <AnimatedImageColumn
-                                images={images.slice(4, 8)}
-                                direction="down"
-                                className="h-full"
-                            />
+                            <AnimatedImageColumn images={images.slice(0, 4)} direction="up" />
+                            <AnimatedImageColumn images={images.slice(4, 8)} direction="down" />
                         </div>
                     </div>
 
-                    {/* Mobile Image Collage - Horizontal Scroll */}
+                    {/* Mobile Image Collage */}
                     <div className="lg:hidden relative h-[300px] -mx-6">
-                        <div className="absolute top-0 left-0 bottom-0 w-16 bg-gradient-to-r from-[#0B0B0B] to-transparent z-10 pointer-events-none" />
-                        <div className="absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-[#0B0B0B] to-transparent z-10 pointer-events-none" />
+                        <div className="absolute top-0 left-0 bottom-0 w-16 bg-gradient-to-r from-[#0B0B0B] to-transparent z-10" />
+                        <div className="absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-[#0B0B0B] to-transparent z-10" />
 
                         <div className="flex gap-4 h-full overflow-hidden px-6">
                             {[...images, ...images].map((img, idx) => (

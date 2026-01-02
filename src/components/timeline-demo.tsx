@@ -1,107 +1,71 @@
 import { Timeline } from "@/components/ui/timeline";
 
-const Img = ({ src, alt }: { src: string; alt: string }) => (
-    <div className="overflow-hidden rounded-2xl border border-black/10 bg-neutral-100">
-        <img
-            src={src}
-            alt={alt}
-            className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.02]"
-            loading="lazy"
-        />
-    </div>
-);
-
 export default function CompanyTimeline() {
     const data = [
         {
-            title: "2023",
+            title: "2024 — Foundation",
             content: (
                 <div className="space-y-4">
                     <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        2023 was the foundation year. We focused on website development and media services, with delivery centered on fast performance, clean UX, and conversion-ready pages. We shipped websites for service businesses and product-led brands, and supported them with content assets and launch creatives. The goal was simple. Build reliable digital execution and a repeatable delivery process.
+                        2024 marked the foundation phase of StratX AI. This year was focused on
+                        building internal capability, refining execution standards, and
+                        establishing the core direction of the company. We worked across
+                        websites, digital systems, and early AI workflows, prioritizing
+                        reliability, performance, and real business use cases over experimentation.
                     </p>
 
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <Img
-                            src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop"
-                            alt="Website development"
-                        />
-                        <Img
-                            src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1600&auto=format&fit=crop"
-                            alt="Media production"
-                        />
-                        <Img
-                            src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop"
-                            alt="Creative workflow"
-                        />
-                    </div>
-
-                    <p className="text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
-                        Placeholder stats you can finalize: websites shipped, average load time improvement, conversion uplift, content assets produced.
+                    <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+                        The objective was simple: build strong delivery fundamentals and a
+                        repeatable execution process that could later support scale. This year
+                        shaped our operational discipline and technical depth.
                     </p>
                 </div>
             ),
         },
 
         {
-            title: "2024",
+            title: "2025 — Scale & Visibility",
             content: (
                 <div className="space-y-4">
                     <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        2024 is where AI became the focus. We built an HR AI product and showcased it at demo days. The feedback pushed us beyond features and into real usage. We improved workflows, onboarding, and reliability, then moved toward production-ready AI systems. Within the same year, we expanded our AI work into automation and integrations so AI could plug into real business operations.
+                        2025 became the scale year. StratX AI expanded beyond foundational work
+                        into structured growth. We scaled internal operations, improved delivery
+                        standards, and formalized our AI offering with a strong focus on HR AI
+                        systems and applied automation.
                     </p>
-
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <Img
-                            src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1600&auto=format&fit=crop"
-                            alt="Product demo"
-                        />
-                        <Img
-                            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop"
-                            alt="AI systems"
-                        />
-                    </div>
 
                     <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        This year shaped our service direction. We started offering AI automation services alongside development, including workflow automation, data pipelines, and AI assisted internal tools.
+                        This year also marked our entry into global visibility. We participated
+                        in major AI events, including the Global AI Show, positioning StratX AI
+                        as a serious execution partner rather than a conceptual AI studio.
                     </p>
 
-                    <p className="text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
-                        Placeholder stats you can finalize: demo days attended, product iterations shipped, automation workflows deployed, average time saved per workflow.
+                    <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+                        By the end of 2025, StratX AI had transitioned from a build-focused
+                        company into a scale-ready AI firm with clear service lines, stronger
+                        governance, and international exposure.
                     </p>
                 </div>
             ),
         },
 
         {
-            title: "2025",
+            title: "2026 — International Expansion",
             content: (
                 <div className="space-y-4">
                     <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        2025 became the scale year. We signed multinational companies and upgraded delivery standards across documentation, security, and QA. We also pushed into global visibility through Canada demo shows and Global AI events. At the same time, UstaHub expanded to 6 countries: Georgia, Armenia, Uzbekistan, Russia, Indonesia, and Malaysia. UstaHub crossed 2,000+ organic downloads in Asia, with no paid growth.
+                        2026 represents the expansion phase. StratX AI is entering new markets,
+                        beginning with the United Kingdom and the United Arab Emirates. This
+                        phase is focused on regional partnerships, enterprise deployments, and
+                        adapting AI systems for international regulatory and operational
+                        environments.
                     </p>
 
                     <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        This year also matured our web and AI services. Web delivery improved with stronger SEO foundations and conversion-first structures. AI delivery improved through production automation, structured data flows, and agent-like workflows for real operations.
-                    </p>
-
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <Img
-                            src="https://images.unsplash.com/photo-1529119368496-2dfda6ec2804?q=80&w=1600&auto=format&fit=crop"
-                            alt="Global event"
-                        />
-                        <Img
-                            src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop"
-                            alt="Enterprise delivery"
-                        />
-                        <Img
-                            src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=1600&auto=format&fit=crop"
-                            alt="Product growth"
-                        />
-                    </div>
-
-                    <p className="text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
-                        Confirmed stats included: 6 countries, 2,000+ organic downloads in Asia. Add your final numbers for multinational clients, demo shows, and event appearances.
+                        The objective is not rapid geographic presence, but sustainable global
+                        growth. Our focus remains on building long-term value through reliable,
+                        ethical, and outcome-driven AI systems for organizations operating at
+                        scale.
                     </p>
                 </div>
             ),

@@ -1,9 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import { motion } from "motion/react";
-import { IconArrowRight, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import { ParallaxY } from "./motion/Parallax";
-import { Reveal } from "./motion/Reveal";
+import {
+    IconArrowRight,
+    IconChevronLeft,
+    IconChevronRight,
+} from "@tabler/icons-react";
 import { supabase } from "@/lib/supabaseClient";
+
+/* ================= TYPES ================= */
 
 export interface Case {
     id: string;
@@ -18,93 +21,120 @@ export interface Case {
     order_index: number;
 }
 
+/* ================= CASE CARD ================= */
 const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [hovered, setHovered] = useState<boolean>(false);
 
     return (
         <a
             href={`/cases/${caseStudy.slug}`}
-            className="relative flex-shrink-0 w-[80vw] md:w-[40vw] lg:w-[28vw] h-[480px] snap-start group cursor-pointer block"
-            onMouseEnter={() => setIsExpanded(true)}
-            onMouseLeave={() => setIsExpanded(false)}
+            className="relative flex-shrink-0 w-[85vw] sm:w-[70vw] md:w-[45vw] lg:w-[30vw] h-[420px] md:h-[480px] snap-start block no-underline"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
         >
-            <div className="absolute inset-0 rounded-2xl overflow-hidden border border-black/5 bg-white shadow-sm transition-all duration-500 ease-out hover:shadow-xl">
-                {/* Default State Image & Overlay */}
-                <div className="relative w-full h-full overflow-hidden bg-neutral-900">
-                    <div className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                        <ParallaxY speed={-30} className="w-full h-full">
-                            <motion.img
-                                src={caseStudy.thumbnail_url}
-                                alt={caseStudy.title}
-                                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                animate={{
-                                    opacity: isExpanded ? 0.4 : 1
-                                }}
-                                transition={{ duration: 0.5 }}
-                            />
-                        </ParallaxY>
-                    </div>
+            <div className="relative h-full w-full rounded-2xl overflow-hidden shadow-md bg-white">
 
-                    {/* Default State Content Overlay */}
-                    <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6 flex flex-col justify-between"
-                        animate={{ opacity: isExpanded ? 0 : 1 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <div className="flex">
-                            <span className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[9px] font-bold text-white tracking-widest uppercase">
-                                ● {caseStudy.category}
-                            </span>
-                        </div>
-
-                        <div className="space-y-3">
-                            <div>
-                                <Reveal variant="fadeUp" duration={0.5}>
-                                    <h3 className="text-2xl font-bold text-white mb-2 leading-tight">{caseStudy.title}</h3>
-                                </Reveal>
-                                <Reveal variant="fadeUp" delay={0.1} duration={0.5}>
-                                    <p className="text-white/80 text-sm line-clamp-2 max-w-[90%] font-medium leading-relaxed">
-                                        {caseStudy.short_description}
-                                    </p>
-                                </Reveal>
-                            </div>
-
-                            <div className="flex flex-wrap gap-2">
-                                {caseStudy.what_we_did.slice(0, 2).map((tag, i) => (
-                                    <span key={i} className="border border-white/20 px-3 py-1 rounded-full text-[9px] font-medium text-white/90 uppercase tracking-wide">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* Bottom Blue Strip (Default) */}
+                {/* IMAGE */}
+                <div className="absolute inset-0">
+                    <img
+                        src={caseStudy.thumbnail_url}
+                        alt={caseStudy.title}
+                        className={`w-full h-full object-cover transition-all duration-700 ease-out ${hovered ? "blur-[8px] scale-105" : "blur-0 scale-100"
+                            }`}
+                    />
                     <div
-                        className="absolute bottom-0 left-0 right-0 h-14 bg-[#1E2BFF] flex items-center justify-between px-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"
-                    >
-                        <div className="flex items-center justify-between w-full text-white">
-                            <span className="font-bold text-[10px] tracking-widest uppercase">View Case Study</span>
-                            <IconArrowRight className="w-4 h-4" />
-                        </div>
-                    </div>
+                        className={`absolute inset-0 transition-opacity duration-700 ${hovered ? "bg-black/20" : "bg-black/40"
+                            }`}
+                    />
+                </div>
 
-                    {/* Expanded State Content - Glassmorphism */}
-                    <motion.div
-                        className="absolute inset-0 bg-black/40 backdrop-blur-md p-8 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style={{ pointerEvents: 'none' }}
+                {/* CATEGORY BADGE */}
+                <div className="absolute top-4 left-4 z-30">
+                    <span className="bg-white/90 px-3 py-1 rounded-full text-[9px] font-bold text-black uppercase tracking-widest">
+                        ● {caseStudy.category}
+                    </span>
+                </div>
+
+                {/* GLASS MORPHISM (BOTTOM HALF) */}
+                <div
+                    className={`absolute bottom-0 left-0 right-0 h-[60%] z-20 transition-all duration-700 ${hovered
+                        ? "bg-white/60 backdrop-blur-xl"
+                        : "bg-transparent backdrop-blur-0"
+                        }`}
+                />
+
+                {/* CONTENT BLOCK (MOVES UP) */}
+                <div
+                    className={`absolute inset-x-0 bottom-0 z-30 p-5 transition-transform duration-700 ease-out ${hovered ? "-translate-y-12" : "translate-y-0"
+                        }`}
+                >
+                    <h3
+                        className={`font-bold mb-2 transition-all duration-700 ${hovered
+                            ? "text-[#1E2BFF] scale-[1.05]"
+                            : "text-white scale-100"
+                            }`}
+                        style={{ transformOrigin: "left bottom" }}
                     >
-                        {/* Simplified expanded state to focus on visual cleanness */}
-                    </motion.div>
+                        {caseStudy.title}
+                    </h3>
+
+                    <p
+                        className={`text-sm line-clamp-2 mb-4 max-w-[90%] transition-all duration-700 ${hovered
+                            ? "text-black/80 scale-[1.03]"
+                            : "text-white/80 scale-100"
+                            }`}
+                        style={{ transformOrigin: "left bottom" }}
+                    >
+                        {caseStudy.short_description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                        {caseStudy.what_we_did.slice(0, 3).map((tag: string, i: number) => (
+                            <span
+                                key={i}
+                                className={`px-3 py-1 rounded-full text-[9px] font-semibold uppercase tracking-wide transition-all duration-700 ${hovered
+                                    ? "bg-[#1E2BFF] text-white scale-105"
+                                    : "border border-white/50 text-white scale-100"
+                                    }`}
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                {/* CTA BAR (ENTERS AFTER TEXT MOVES) */}
+                <div
+                    className={`absolute bottom-0 inset-x-0 z-40 bg-[#1E2BFF] transition-all duration-700 ease-out ${hovered
+                        ? "translate-y-0 opacity-100 delay-150"
+                        : "translate-y-full opacity-0"
+                        }`}
+                >
+                    <div className="w-full py-4 flex items-center justify-center text-white text-[10px] font-bold tracking-widest uppercase gap-2">
+                        VIEW CASE STUDY
+                        <IconArrowRight size={16} />
+                    </div>
+                </div>
+
+                {/* MOBILE CTA (ALWAYS VISIBLE, NO OVERLAP) */}
+                <div className="md:hidden absolute bottom-0 inset-x-0 z-40 bg-[#1E2BFF]">
+                    <div className="w-full py-4 flex items-center justify-center text-white text-[10px] font-bold tracking-widest uppercase gap-2">
+                        SEE WORK
+                        <IconArrowRight size={16} />
+                    </div>
                 </div>
             </div>
         </a>
     );
 };
 
+/* ================= SKELETON ================= */
+
 const CaseSkeleton = () => (
-    <div className="flex-shrink-0 w-[80vw] md:w-[40vw] lg:w-[28vw] h-[480px] rounded-2xl bg-neutral-100 animate-pulse border border-black/5" />
+    <div className="flex-shrink-0 w-[85vw] sm:w-[70vw] md:w-[45vw] lg:w-[30vw] h-[420px] sm:h-[450px] md:h-[480px] rounded-xl md:rounded-2xl bg-neutral-100 animate-pulse border border-black/5" />
 );
+
+/* ================= FEATURED CASES ================= */
 
 export default function FeaturedCases() {
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -112,131 +142,90 @@ export default function FeaturedCases() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchFeaturedCases() {
-            try {
-                const { data, error } = await supabase
-                    .from('case_studies')
-                    .select('*')
-                    .eq('is_featured', true)
-                    .eq('published', true)
-                    .order('order_index', { ascending: true });
+        async function fetchCases() {
+            const { data } = await supabase
+                .from("case_studies")
+                .select("*")
+                .eq("is_featured", true)
+                .eq("published", true)
+                .order("order_index", { ascending: true });
 
-                if (error) throw error;
-                setCases(data || []);
-            } catch (err) {
-                console.error("Error fetching cases:", err);
-            } finally {
-                setLoading(false);
-            }
+            setCases(data || []);
+            setLoading(false);
         }
 
-        fetchFeaturedCases();
+        fetchCases();
     }, []);
 
-    const scroll = (direction: "left" | "right") => {
-        if (scrollRef.current) {
-            const { scrollLeft, clientWidth } = scrollRef.current;
-            const scrollTo = direction === "left" ? scrollLeft - clientWidth / 2 : scrollLeft + clientWidth / 2;
-            scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
-        }
+    const scroll = (dir: "left" | "right") => {
+        if (!scrollRef.current) return;
+        const { scrollLeft, clientWidth } = scrollRef.current;
+
+        scrollRef.current.scrollTo({
+            left:
+                dir === "left"
+                    ? scrollLeft - clientWidth / 2
+                    : scrollLeft + clientWidth / 2,
+            behavior: "smooth",
+        });
     };
 
     if (!loading && cases.length === 0) return null;
 
     return (
-        <section className="bg-white py-20 md:py-24 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
-                    <div className="max-w-xl">
-                        <span className="text-[#1E2BFF] font-bold tracking-widest uppercase text-[10px]">CASES</span>
-                        <h2 className="text-2xl md:text-4xl font-semibold text-black tracking-tight mt-3 mb-4">
-                            Featured cases
-                        </h2>
-                        <p className="text-[#86868b] text-[15px] md:text-[17px] font-medium leading-relaxed">
-                            We believe in work that shifts brand perception and drives measurable results.
-                        </p>
-                    </div>
+        <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 sm:mb-10 md:mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 sm:gap-6">
+                <div className="max-w-xl">
+                    <span className="text-[#1E2BFF] font-bold tracking-widest uppercase text-[9px] sm:text-[10px]">
+                        CASES
+                    </span>
+                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mt-2 sm:mt-3 mb-3 sm:mb-4 text-black">
+                        Featured case studies
+                    </h2>
 
-                    <a href="/cases" className="bg-[#1E2BFF] font-bold text-white px-5 py-2.5 rounded-lg text-[9px] tracking-widest uppercase hover:bg-blue-700 transition-colors flex items-center gap-2 group whitespace-nowrap mb-1 no-underline">
-                        VIEW MORE CASES
-                        <IconArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-                    </a>
+                    <p className="text-[#86868b] text-sm sm:text-[15px] md:text-[17px]">
+                        We believe in work that shifts brand perception and drives measurable results.
+                    </p>
                 </div>
+
+                <a
+                    href="/case-studies"
+                    className="bg-[#1E2BFF] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-[8px] sm:text-[9px] font-bold tracking-widest uppercase flex items-center gap-2 no-underline whitespace-nowrap hover:bg-[#1a25d9] transition-colors"
+                >
+                    READ ALL CASE STUDIES
+                    <IconArrowRight className="w-3 h-3" />
+                </a>
             </div>
 
-            <div className="relative group">
+            <div className="relative">
                 <div
                     ref={scrollRef}
-                    className="flex gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-none px-[max(1.5rem,calc((100vw-80rem)/2))] pb-10 cursor-grab active:cursor-grabbing"
-                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    className="flex gap-3 sm:gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-none px-4 sm:px-6 md:px-[max(1.5rem,calc((100vw-80rem)/2))] pb-6 sm:pb-8 md:pb-10"
                 >
-                    {loading ? (
-                        [1, 2, 3].map((i) => <CaseSkeleton key={i} />)
-                    ) : (
-                        cases.map((caseStudy) => (
-                            <CaseCard key={caseStudy.id} caseStudy={caseStudy} />
-                        ))
-                    )}
+                    {loading
+                        ? [1, 2, 3].map((i) => <CaseSkeleton key={i} />)
+                        : cases.map((c) => <CaseCard key={c.id} caseStudy={c} />)}
                 </div>
 
                 {!loading && cases.length > 0 && (
-                    <div className="flex justify-end gap-2 px-6 max-w-7xl mx-auto -mt-4">
+                    <div className="flex justify-end gap-2 px-4 sm:px-6 max-w-7xl mx-auto -mt-2 sm:-mt-4">
                         <button
                             onClick={() => scroll("left")}
-                            className="w-10 h-10 flex items-center justify-center border border-black/5 rounded-lg hover:bg-black/5 transition-colors"
+                            className="w-9 h-9 sm:w-10 sm:h-10 border border-black/10 rounded-lg flex items-center justify-center hover:bg-black/5 transition-colors"
+                            aria-label="Scroll left"
                         >
-                            <IconChevronLeft className="w-5 h-5 text-black" />
+                            <IconChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                         <button
                             onClick={() => scroll("right")}
-                            className="w-10 h-10 flex items-center justify-center border border-black/5 rounded-lg hover:bg-black/5 transition-colors"
+                            className="w-9 h-9 sm:w-10 sm:h-10 border border-black/10 rounded-lg flex items-center justify-center hover:bg-black/5 transition-colors"
+                            aria-label="Scroll right"
                         >
-                            <IconChevronRight className="w-5 h-5 text-black" />
+                            <IconChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                     </div>
                 )}
             </div>
         </section>
     );
-
 }
-
-// Dummy data for exports if needed by other components
-export const cases: Case[] = [
-    {
-        id: "1",
-        category: "Fintech",
-        title: "Revolutionizing Digital Banking",
-        short_description: "A complete overhaul of the digital banking experience for a leading fintech startup.",
-        thumbnail_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop",
-        what_we_did: ["UX/UI Design", "Mobile App"],
-        slug: "digital-banking",
-        is_featured: true,
-        published: true,
-        order_index: 0
-    },
-    {
-        id: "2",
-        category: "E-commerce",
-        title: "Global Fashion Marketplace",
-        short_description: "Scaling a fashion marketplace to reach millions of users worldwide with a seamless shopping experience.",
-        thumbnail_url: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1470&auto=format&fit=crop",
-        what_we_did: ["Web Development", "Strategy"],
-        slug: "fashion-marketplace",
-        is_featured: true,
-        published: true,
-        order_index: 1
-    },
-    {
-        id: "3",
-        category: "Healthcare",
-        title: "AI-Powered Diagnostics",
-        short_description: "Leveraging diagnostic AI to improve patient outcomes and streamline medical workflows.",
-        thumbnail_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1470&auto=format&fit=crop",
-        what_we_did: ["AI Integration", "Product Design"],
-        slug: "ai-diagnostics",
-        is_featured: true,
-        published: true,
-        order_index: 2
-    }
-];

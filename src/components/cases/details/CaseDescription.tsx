@@ -37,6 +37,9 @@ export default function CaseDescription({
                             <button className="h-10 px-8 bg-[#1E2BFF] text-white text-[11px] font-bold tracking-[0.15em] uppercase hover:bg-black transition-all duration-300 rounded-none">
                                 START YOUR PROJECT
                             </button>
+                            <button className="h-10 px-8 border border-black/10 text-black text-[11px] font-bold tracking-[0.15em] uppercase hover:bg-black hover:text-white transition-all duration-300 rounded-none">
+                                VISIT LIVE WEBSITE
+                            </button>
                         </div>
                     </div>
 

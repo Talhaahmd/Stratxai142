@@ -31,7 +31,7 @@ export default function OurClients() {
                 </div>
             </section>
 
-            {/* Get to know StratX Section */}
+            {/* Get to know Klarus Section */}
             <AppleCardsCarouselDemo />
 
             {/* Service Section */}

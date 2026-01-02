@@ -23,7 +23,7 @@ const CinematicSection: React.FC = () => {
                         playsInline
                         className="w-full h-full object-cover object-center"
                     >
-                        <source src="https://res.cloudinary.com/dt93sahp2/video/upload/v1758201732/stratX_hero_2_davjup.mp4" type="video/mp4" />
+                        <source src="https://cdn.dribbble.com/userupload/13542375/file/original-84fb757fac42148dc3d4fe49b07ef420.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
 

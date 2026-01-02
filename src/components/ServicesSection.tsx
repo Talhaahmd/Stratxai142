@@ -22,7 +22,7 @@ export const services: ServiceItem[] = [
         id: 'performance-marketing',
         number: '02',
         title: 'Performance Marketing',
-        description: 'Data-driven campaigns built on testing and conversion tracking for measurable growth.',
+        description: 'High-performing Meta and Google Ads campaigns driven by testing, data, and full-funnel conversion tracking.',
     },
     {
         id: 'ai-automation',
