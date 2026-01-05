@@ -39,7 +39,7 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
                     <img
                         src={caseStudy.thumbnail_url}
                         alt={caseStudy.title}
-                        onError={(e) => console.error(`Failed to load image for ${caseStudy.title}:`, caseStudy.thumbnail_url)}
+                        onError={() => console.error(`Failed to load image for ${caseStudy.title}:`, caseStudy.thumbnail_url)}
                         className={`w-full h-full object-cover transition-all duration-700 ease-out ${hovered ? "blur-[8px] scale-105" : "blur-0 scale-100"
                             }`}
                     />
