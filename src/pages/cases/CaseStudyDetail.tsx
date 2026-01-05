@@ -55,13 +55,27 @@ export default function CaseStudyDetail() {
                     throw error;
                 }
 
-                if (!data) {
-                    console.error("No data found for slug:", slug);
-                    throw new Error("Not found");
-                }
+                if (data) {
+                    const resolveSupabaseUrl = (url: string) => {
+                        if (!url) return "";
+                        if (url.startsWith("http") || url.startsWith("https") || url.startsWith("/")) return url;
+                        return supabase.storage.from('case-studies').getPublicUrl(url).data.publicUrl;
+                    };
 
-                console.log("Case study data received:", data);
-                setCaseData(data);
+                    const processedData = {
+                        ...data,
+                        hero_image_url: resolveSupabaseUrl(data.hero_image_url),
+                        thumbnail_url: resolveSupabaseUrl(data.thumbnail_url),
+                        media_gallery: (data.media_gallery || []).map((item: any) => ({
+                            ...item,
+                            image_url: resolveSupabaseUrl(item.image_url || item.url || item.src),
+                            src: resolveSupabaseUrl(item.image_url || item.url || item.src)
+                        }))
+                    };
+
+                    console.log("Case study data received:", processedData);
+                    setCaseData(processedData);
+                }
             } catch (err) {
                 console.error("Error fetching case study:", err);
                 setError(true);

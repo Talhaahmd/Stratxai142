@@ -39,6 +39,7 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
                     <img
                         src={caseStudy.thumbnail_url}
                         alt={caseStudy.title}
+                        onError={(e) => console.error(`Failed to load image for ${caseStudy.title}:`, caseStudy.thumbnail_url)}
                         className={`w-full h-full object-cover transition-all duration-700 ease-out ${hovered ? "blur-[8px] scale-105" : "blur-0 scale-100"
                             }`}
                     />
@@ -89,7 +90,7 @@ const CaseCard = ({ caseStudy }: { caseStudy: Case }) => {
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                        {caseStudy.what_we_did.slice(0, 3).map((tag: string, i: number) => (
+                        {(caseStudy.what_we_did || []).slice(0, 3).map((tag: string, i: number) => (
                             <span
                                 key={i}
                                 className={`px-3 py-1 rounded-full text-[9px] font-semibold uppercase tracking-wide transition-all duration-700 ${hovered
@@ -141,6 +142,13 @@ export default function FeaturedCases() {
     const [cases, setCases] = useState<Case[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const resolveSupabaseUrl = (url: string) => {
+        if (!url) return "";
+        if (url.startsWith("http") || url.startsWith("https") || url.startsWith("/")) return url;
+        // Fallback: assume it's a path in 'case-studies' bucket
+        return supabase.storage.from('case-studies').getPublicUrl(url).data.publicUrl;
+    };
+
     useEffect(() => {
         async function fetchCases() {
             const { data } = await supabase
@@ -150,7 +158,16 @@ export default function FeaturedCases() {
                 .eq("published", true)
                 .order("order_index", { ascending: true });
 
-            setCases(data || []);
+            if (data) {
+                console.log("FeaturedCases fetched:", data.length);
+                const processedData = data.map((item: Case) => ({
+                    ...item,
+                    thumbnail_url: resolveSupabaseUrl(item.thumbnail_url)
+                }));
+                setCases(processedData);
+            } else {
+                console.error("FeaturedCases: No data returned from Supabase");
+            }
             setLoading(false);
         }
 
@@ -170,7 +187,9 @@ export default function FeaturedCases() {
         });
     };
 
-    if (!loading && cases.length === 0) return null;
+    if (!loading && cases.length === 0) {
+        return <div className="p-10 text-center text-red-500">DEBUG: No cases found. Check console.</div>;
+    }
 
     return (
         <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">

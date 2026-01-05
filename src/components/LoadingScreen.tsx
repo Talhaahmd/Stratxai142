@@ -17,7 +17,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             <div className="text-center">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tighter">
                     <EncryptedText
-                        text="We are the StratX AI."
+                        text="We Are StratX AI."
                         className="uppercase"
                         encryptedClassName="text-white/20"
                         revealedClassName="text-white"
