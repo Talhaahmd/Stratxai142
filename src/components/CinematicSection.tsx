@@ -14,7 +14,7 @@ const CinematicSection: React.FC = () => {
                 </p>
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 md:px-0 h-[65vh] md:h-[85vh]">
+            <div className="max-w-6xl mx-auto px-4 md:px-0 h-[45vh] md:h-[85vh]">
                 <div className="relative w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
                     <video
                         autoPlay

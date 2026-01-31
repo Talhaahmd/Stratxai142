@@ -192,7 +192,7 @@ export default function StratxaiMarketing() {
                 </div>
 
                 {/* Content Overlay */}
-                <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-20 lg:py-24 min-h-[calc(100vh-80px)] flex items-center">
+                <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 py-12 md:py-20 lg:py-24 min-h-[calc(100vh-80px)] flex items-center">
                     <div className="max-w-2xl">
                         {/* BADGE */}
                         <div className="flex items-center gap-3 mb-8">
@@ -204,7 +204,7 @@ export default function StratxaiMarketing() {
                         </div>
 
                         {/* Main Heading */}
-                        <h1 className="text-5xl lg:text-6xl xl:text-7xl font-normal text-white leading-[0.95] tracking-tight mb-8">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal text-white leading-[0.95] tracking-tight mb-8">
                             Your Complete Marketing Team For Just $499/month
                         </h1>
 
