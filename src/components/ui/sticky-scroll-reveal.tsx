@@ -10,7 +10,7 @@ export const StickyScroll = ({
 }: {
     content: {
         title: string;
-        description: string;
+        description: string | React.ReactNode;
         content?: React.ReactNode | any;
     }[];
     contentClassName?: string;
@@ -58,7 +58,7 @@ export const StickyScroll = ({
                             >
                                 {item.title}
                             </motion.h2>
-                            <motion.p
+                            <motion.div
                                 initial={{
                                     opacity: 0,
                                 }}
@@ -68,7 +68,7 @@ export const StickyScroll = ({
                                 className="text-lg md:text-xl mt-10 max-w-lg text-neutral-500 leading-relaxed font-medium transition-colors duration-500"
                             >
                                 {item.description}
-                            </motion.p>
+                            </motion.div>
                             {/* Mobile Image (Visible only on mobile) */}
                             <div className="mt-12 lg:hidden w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-neutral-100">
                                 {content[index].content ?? null}
