@@ -15,6 +15,7 @@ import OurClients from './pages/OurClients';
 import ClientDetail from './pages/clients/ClientDetail';
 import StoryDetail from './pages/stories/StoryDetail';
 import AiPrompts from './pages/AiPrompts';
+import StratxaiMarketing from './pages/StratxaiMarketing';
 import LoadingScreen from './components/LoadingScreen';
 import { SmoothScrollProvider } from './components/providers/SmoothScrollProvider';
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/clients/:slug" element={<ClientDetail />} />
           <Route path="/stories/:slug" element={<StoryDetail />} />
           <Route path="/ai-prompts" element={<AiPrompts />} />
+          <Route path="/stratxai-marketing" element={<StratxaiMarketing />} />
           <Route path="/services/digital-development" element={<DigitalDevelopment />} />
           <Route path="/services/performance-marketing" element={<PerformanceMarketing />} />
           <Route path="/services/ai-automation" element={<AIAutomation />} />
