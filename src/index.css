@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: 'Baserock';
+    src: url('./assets/fonts/Baserock.eot');
+    src: url('./assets/fonts/Baserock.eot?#iefix') format('embedded-opentype'),
+         url('./assets/fonts/Baserock.woff') format('woff'),
+         url('./assets/fonts/Baserock.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 @theme {
   --color-primary: #1E2BFF;
   --color-black: #000000;
@@ -9,7 +20,7 @@
   --color-muted: #4A4A4A;
   --color-divider: #E5E5E5;
 
-  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-sans: "Baserock", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
 :root {
