@@ -3,50 +3,72 @@ import { useEffect, useState } from "react";
 
 export default function PremiumHero() {
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
     const SplineViewer = "spline-viewer" as any;
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoaded(true), 50);
-        return () => clearTimeout(timer);
+
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener("resize", checkMobile);
+        };
     }, []);
 
     return (
         <section className="relative h-screen w-full bg-[#0B0B0B] overflow-hidden">
 
-            {/* SPLINE TRUE BACKGROUND */}
+            {/* SPLINE BACKGROUND */}
             <div className="absolute inset-0 z-0 pointer-events-none">
 
-                {/* force spline canvas to behave like background */}
                 <div
                     className="absolute top-1/2 right-[-12vw] -translate-y-1/2"
                     style={{
-                        width: "1100px",
-                        height: "1100px",
+                        width: isMobile ? "700px" : "1100px",
+                        height: isMobile ? "700px" : "1100px",
                         opacity: isLoaded ? 1 : 0,
                         transition: "opacity 800ms ease-out"
                     }}
                 >
-                    {/* ambient glow */}
+
+                    {/* MOBILE OPTIMIZED GLOW */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-[140%] h-[140%] bg-[#2F5BFF] blur-[140px] opacity-[0.12] rounded-full" />
+                        <div
+                            className={`w-[140%] h-[140%] bg-[#2F5BFF] rounded-full opacity-[0.12] ${isMobile ? "blur-[50px]" : "blur-[140px]"
+                                }`}
+                        />
                     </div>
 
-                    {/* spline viewer */}
+                    {/* SPLINE VIEWER — LOW POWER MODE ON MOBILE */}
                     <SplineViewer
                         url="/loop_cards.spline"
                         loading="eager"
                         events-target="global"
+                        render-mode={isMobile ? "low-power" : "high-performance"}
                         style={{
                             width: "100%",
                             height: "100%",
                             display: "block",
-                            background: "transparent"
+                            background: "transparent",
+
+                            // CRITICAL PERFORMANCE FIX
+                            transform: "translateZ(0)",
+                            willChange: "transform"
                         }}
                     />
+
                 </div>
             </div>
 
-            {/* LEFT DARK GRADIENT FOR TEXT READABILITY */}
+            {/* GRADIENT */}
             <div
                 className="absolute inset-0 z-10 pointer-events-none"
                 style={{
